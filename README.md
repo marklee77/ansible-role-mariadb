@@ -17,7 +17,7 @@ Role Variables
 Example Playbook
 -------------------------
 
-    - hosts: default
+    - hosts: all
       roles:
         - marklee77.mariadb
 
