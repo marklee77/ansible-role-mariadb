@@ -1,5 +1,5 @@
 ---
-- name: ensure required mariadb prerequisite packages are installed
+- name: ensure mariadb dependency packages are installed
   apt: 
     pkg: "{{ item }}"
     state: latest 
@@ -36,7 +36,7 @@
     state: started 
     enabled: yes
 
-- name: update mariadb root password for all root accounts
+- name: update mariadb root password for local root account
   mysql_user: 
     name: root 
     host: localhost 
@@ -54,7 +54,7 @@
     group: root 
     mode: 0600
 
-- name: update mariadb root password for all root accounts
+- name: update mariadb root password for all other root accounts
   mysql_user: 
     name: root 
     host: "{{ item }}" 

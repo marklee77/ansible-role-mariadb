@@ -12,9 +12,6 @@ before_install:
     - sudo truncate -s 0 /var/log/mysql/error.log
 
     - sudo apt-get update
-    - sudo apt-get -y upgrade
-    - sudo apt-get -y autoremove
-    - sudo apt-get -y clean
 
 install:
 
@@ -30,8 +27,10 @@ script:
     # Run the role/playbook with ansible-playbook.
     - ansible-playbook -i travis/inventory site.yml
 
-    # properly idempotence should require no changes, but the travis vm seems to
-    # have trouble seeing that chrony is running...
+    # Rerun the role/playbook with ansible-playbook.
+    - ansible-playbook -i travis/inventory site.yml
+
+    # Idempotence Test
     - >
       ansible-playbook -i travis/inventory site.yml
       | grep -q 'changed=0.*failed=0'
