@@ -9,8 +9,8 @@
     - python-software-properties
 
 - name: ensure mariadb repository public key is installed
-  register: apt_key
   command: apt-key adv --recv-key --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+  register: apt_key
   changed_when: apt_key.stderr.find("imported") != -1
 
 - name: ensure mariadb repository is enabled
