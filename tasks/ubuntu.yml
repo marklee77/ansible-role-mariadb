@@ -1,0 +1,63 @@
+---
+- name: ensure mariadb dependency packages are installed
+  apt: 
+    pkg: "{{ item }}"
+    state: latest 
+    update_cache: yes 
+    cache_valid_time: 600
+  with_items:
+    - python-software-properties
+
+- name: ensure mariadb repository public key is installed
+  command: apt-key adv --recv-key --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+  register: apt_key
+  changed_when: apt_key.stderr.find("imported") != -1
+
+- name: ensure mariadb repository is enabled
+  apt_repository: 
+    repo: deb {{ mariadb_repository_mirror }}/repo/{{ mariadb_version }}/ubuntu {{ ansible_distribution_release }} main
+    update_cache: yes
+    state: present
+
+- name: ensure mariadb packages and ansible dependencies are installed
+  apt: 
+    pkg: "{{ item }}"
+    state: latest 
+    update_cache: yes 
+    cache_valid_time: 600
+  with_items:
+    - mariadb-server
+    - mariadb-client
+    - python-mysqldb
+
+- name: ensure mariadb does not bind to localhost if remote connections are enabled
+  lineinfile:
+    dest: /etc/mysql/my.cnf
+    regexp: ^bind-address\s*=\s*127.0.0.1
+    line: bind-address = 127.0.0.1
+    insertafter: "\\[mysqld\\]"
+    state: "{% if mariadb_enable_remote %}absent{% else %}present{% endif %}"
+  notify:
+    - restart mariadb
+
+- name: ensure mariadb is started and enabled
+  service: 
+    name: mysql
+    state: started 
+    enabled: yes
+
+- name: ensure anonymous users are not in the database
+  mysql_user: 
+    name: "" 
+    host: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ ansible_hostname }}"
+    - "{{ inventory_hostname }}"
+    - localhost
+    - 127.0.0.1
+    - ::1
+    - "%"
+
+- include: setrootpw.yml
+  when: not lookup('ENV', 'DOCKERBUILD')

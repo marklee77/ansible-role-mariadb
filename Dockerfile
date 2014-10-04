@@ -2,6 +2,7 @@ FROM ansible/ubuntu14.04-ansible:stable
 MAINTAINER Mark Stillwell <mark@stillwell.me>
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV DOCKERBUILD true
 
 RUN apt-get -qy clean && \
     rm -rf /var/lib/apt/lists/* && \
