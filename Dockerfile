@@ -18,7 +18,6 @@ RUN cd ansible-role-mariadb && \
     service mysql stop
 
 VOLUME ["/etc/mysql", "/var/run/mysqld", "/usr/lib/mysql"]
-EXPOSE 3306
 
 CMD ["/usr/sbin/mysqld", "--user=mysql", "--basedir=/usr", "--port=3306", \
      "--datadir=/var/lib/mysql", \
@@ -26,3 +25,4 @@ CMD ["/usr/sbin/mysqld", "--user=mysql", "--basedir=/usr", "--port=3306", \
      "--pid-file=/var/run/mysqld/mysqld.pid", \
      "--socket=/var/run/mysqld/mysqld.sock" ]
 
+EXPOSE 3306
