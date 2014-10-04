@@ -1,0 +1,14 @@
+---
+- name: restart mariadb
+  service: 
+    name: mysql
+    state: restarted
+
+# FIXME: hide password with ENV?
+- name: set mariadb remote root password
+  docker:
+    image: "{{ mariadb_docker_username }}/mariadb"
+    volumes_from: mariadb_data
+    detach: False
+    command: mysql mysql -e "GRANT ALL PRIVILEGES on *.* TO 'root'@'%' IDENTIFIED BY '{{ mariadb_root_mysql_password }}' WITH GRANT OPTION;"
+#~
