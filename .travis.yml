@@ -12,7 +12,6 @@ before_install:
     - sudo truncate -s 0 /var/log/mysql/error.log
 
     - sudo apt-get update
-    - sudo apt-get dist-upgrade
 
 install:
 
