@@ -1,0 +1,16 @@
+---
+# No additional setup is needed for this role
+
+- include: site.yml
+
+# Run demo
+
+- hosts: all
+  sudo: True
+  tasks:
+    - name: ensure test user account exists
+      mysql_user:
+        name: test
+        password: test
+        host: localhost
+        state: present
