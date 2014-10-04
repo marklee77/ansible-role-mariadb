@@ -30,6 +30,12 @@
     - mariadb-client
     - python-mysqldb
 
+- name: ensure mariadb does not bind to localhost if remote connections are enabled
+  lineinfile:
+  regexp: ^bind-address
+  state: absent
+  when: mariadb_enable_remote
+
 - name: ensure mariadb is started and enabled
   service: 
     name: mysql
