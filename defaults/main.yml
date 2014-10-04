@@ -6,4 +6,4 @@ mariadb_version: 10.0
 
 mariadb_root_mysql_password: "{{ lookup('password', mariadb_run_dir + '/private/credentials/root-mysql-password') }}"
 
-mariadb_enable_remote: true
+mariadb_enable_remote: false

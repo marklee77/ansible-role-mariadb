@@ -82,9 +82,10 @@
 - name: ensure mariadb does not bind to localhost if remote connections are enabled
   lineinfile:
     dest: /etc/mysql/my.cnf
-    regexp: ^bind-address
-    state: absent
-  when: mariadb_enable_remote
+    regexp: ^bind-address\s*=\s*127.0.0.1
+    line: bind-address = 127.0.0.1
+    insertafter: "\\[mysqld\\]"
+    state: "{% if mariadb_enable_remote %}absent{% else %}present{% endif %}"
   notify:
     - restart mariadb
 
