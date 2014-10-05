@@ -16,10 +16,11 @@ before_install:
 install:
 
     # Install Ansible.
-    - sudo apt-get -y install python-software-properties
-    - sudo apt-add-repository -y ppa:ansible/ansible
-    - sudo apt-get -y install ansible
-    - ansible-playbook --version
+    #- sudo apt-get -y install python-software-properties
+    #- sudo apt-add-repository -y ppa:ansible/ansible
+    #- sudo apt-get -y install ansible
+    #- ansible-playbook --version
+    - pip install ansible
 
 script:
 
