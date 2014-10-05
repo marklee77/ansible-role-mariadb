@@ -7,7 +7,7 @@ mariadb_repository_mirror: http://mirrors.coreix.net/mariadb
 mariadb_version: 10.0
 mariadb_enable_remote: false
 
-dockerized_deployment: false
+dockerized_deployment: true
 
 # Below variables only apply to dockerized deployment
 mariadb_docker_repository: https://github.com/marklee77/docker-ansible-role-mariadb.git
