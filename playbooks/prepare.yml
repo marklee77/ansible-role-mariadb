@@ -1,15 +1,19 @@
 ---
-- hosts: all
+- hosts: localhost
   gather_facts: False
   sudo: False
   tasks:
 
-    - name: check out roles needed for testing from github.com
-      delegate_to: localhost
-      connection: local
+    - name: check out docker role from github.com
       git:
-        repo: 'https://github.com/marklee77/ansible-role-{{ item }}'
-        dest: roles/marklee77.{{ item }}
+        repo: 'https://github.com/marklee77/ansible-role-docker.git'
+        dest: roles/marklee77.docker
         update: yes
-      with_items:
-        - docker
+      when: dockerized_deployment
+
+
+- hosts: all
+  gather_facts: True
+  sudo: True
+  roles:
+    - { role: marklee77.docker, when: dockerized_deployment }

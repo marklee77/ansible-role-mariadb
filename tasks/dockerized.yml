@@ -10,37 +10,46 @@
 
 - name: ensure dockerfile directories exist
   file:
-    path: /home/vagrant/{{ item }}
+    path: "{{ item }}"
     mode: 0700
     state: directory
   with_items:
-    - .ansible_cache
-    - .ansible_cache/docker
+    - "{{ ansible_env.HOME }}/.ansible_cache"
+    - "{{ ansible_env.HOME }}/.ansible_cache/docker"
 
-- name: check out mariadb Dockerfile repository
-  git:
-    repo: "{{ mariadb_docker_repository }}"
-    dest: /home/vagrant/.ansible_cache/docker/mariadb
+#- name: check out mariadb Dockerfile repository
+#  git:
+#    repo: "{{ mariadb_docker_repository }}"
+#    dest: "{{ ansible_env.HOME }}/.ansible_cache/docker/mariadb"
 
-- name: ensure mariadb docker image has been built
-  docker_image:
-    name: "{{ mariadb_docker_username }}/mariadb"
-    path: /home/vagrant/.ansible_cache/docker/mariadb
-    state: present
+- name: synchronize roles directory to remote...
+  synchronize:
+    src: mariadb
+    dest: "{{ ansible_env.HOME }}/.ansible_cache/docker/mariadb"
+    copy_links: yes
+    delete: yes
+    mode: push
+    recursive: yes
 
-- name: ensure mariadb data container exists
-  docker:
-    image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
-    command: /bin/true
-    name: mariadb_data
-    state: present
-  notify:
-    - set mariadb remote root password
+#- name: ensure mariadb docker image has been built
+#  docker_image:
+#    name: "{{ mariadb_docker_username }}/mariadb"
+#    path: .ansible_cache/docker/mariadb
+#    state: present
 
-- name: ensure mariadb service is running
-  docker:
-    image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
-    name: mariadb_server
-    volumes_from: mariadb_data
-    ports: 3306:{{ mariadb_port }}
-    state: running
+#- name: ensure mariadb data container exists
+#  docker:
+#    image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
+#    command: /bin/true
+#    name: mariadb_data
+#    state: present
+#  notify:
+#    - set mariadb remote root password
+
+#- name: ensure mariadb service is running
+#  docker:
+#    image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
+#    name: mariadb_server
+#    volumes_from: mariadb_data
+#    ports: 3306:{{ mariadb_port }}
+#    state: running

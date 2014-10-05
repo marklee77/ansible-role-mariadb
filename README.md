@@ -11,7 +11,7 @@ Role Variables
 - mariadb_repository_mirror: mariadb repository mirror, set to 
                              http://mirrors.coreix.net/mariadb by default.
 - mariadb_version: mariadb version, set to 10.0 by default.
-- mariadb_root_mysql_password: root mysql password; set to a random value by 
+- mariadb_mysql_root_password: root mysql password; set to a random value by 
                                default.
 
 Example Playbook

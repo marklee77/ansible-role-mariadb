@@ -15,5 +15,4 @@ galaxy_info:
   categories:
   - database
   - database:sql
-dependencies: 
-  - marklee77.docker
+dependencies: []
