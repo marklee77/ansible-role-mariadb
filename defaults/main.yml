@@ -10,7 +10,6 @@ mariadb_enable_remote: false
 dockerized_deployment: true
 
 # Below variables only apply to dockerized deployment
-mariadb_docker_repository: https://github.com/marklee77/docker-ansible-role-mariadb.git
 mariadb_docker_username: default
 mariadb_docker_imagename: mariadb
 mariadb_docker_containername: mariadb
