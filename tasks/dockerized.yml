@@ -35,10 +35,11 @@
   notify:
     - set mariadb remote root password
 
+# ports: "{% if !mariadb_enable_remote %}127.0.0.1:{% endif %}3306:{{ mariadb_port }}"
 - name: ensure mariadb service is running
   docker:
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
     name: mariadb_server
     volumes_from: mariadb_data
-    ports: "{% if !mariadb_enable_remote %}127.0.0.1:{% endif %}3306:{{ mariadb_port }}"
+    ports: 3306:{{ mariadb_port }}
     state: running
