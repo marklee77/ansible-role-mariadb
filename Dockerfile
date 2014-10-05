@@ -2,7 +2,6 @@ FROM ansible/ubuntu14.04-ansible:stable
 MAINTAINER Mark Stillwell <mark@stillwell.me>
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV DOCKERBUILD true
 
 RUN apt-get -qy clean && \
     rm -rf /var/lib/apt/lists/* && \
@@ -12,8 +11,9 @@ RUN apt-get -qy clean && \
 
 ADD . ansible-role-mariadb
 RUN cd ansible-role-mariadb && \
-    ansible-playbook -i inventories/local.ini deploy.yml \
-        -e '{ "mariadb_enable_remote" : true, "dockerized_deployment" : false }' && \
+    ansible-playbook -i inventories/local.ini deploy.yml -e \
+        '{ "mariadb_enable_remote" : true, "mariadb_set_root_password" : false, \
+           "dockerized_deployment" : false }' && \
     cd .. && \
     rm -rf ansible-role-mariadb && \
     service mysql stop

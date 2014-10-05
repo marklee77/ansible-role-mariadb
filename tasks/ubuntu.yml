@@ -60,4 +60,4 @@
     - "%"
 
 - include: setrootpw.yml
-  when: not lookup('ENV', 'DOCKERBUILD')
+  when: mariadb_set_root_password

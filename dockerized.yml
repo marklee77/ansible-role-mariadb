@@ -1,8 +1,6 @@
 ---
 - hosts: all
   sudo: False
-  vars:
-    dockerized_deployment: true
   roles:
     - marklee77.mariadb
 
