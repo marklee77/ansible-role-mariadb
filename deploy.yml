@@ -1,5 +1,5 @@
 ---
 - hosts: all
-  sudo: True
+  sudo: False
   roles:
     - marklee77.mariadb
