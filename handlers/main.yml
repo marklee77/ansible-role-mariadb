@@ -4,6 +4,7 @@
     name: mysql
     state: restarted
 
+# FIXME: this could be done with a script, but would that be more secure?
 - name: set mariadb remote root password
   docker:
     image: "{{ mariadb_docker_username }}/mariadb"

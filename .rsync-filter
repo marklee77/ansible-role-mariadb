@@ -1,4 +1,5 @@
 - /.git
+- /.vagrant
 - /group_vars
 - /private
 - /roles

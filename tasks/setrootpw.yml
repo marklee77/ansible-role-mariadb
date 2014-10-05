@@ -17,7 +17,7 @@
     group: root 
     mode: 0600
 
-- name: update mariadb root password for all other root accounts
+- name: update mariadb root password for all other local root accounts
   mysql_user: 
     name: root 
     host: "{{ item }}" 

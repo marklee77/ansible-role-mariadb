@@ -1,17 +1,15 @@
 ---
 mariadb_run_dir: "{{ lookup('env', 'PWD') }}"
-mariadb_mysql_root_password: "{{ lookup('password', mariadb_run_dir + '/private/credentials/root-mysql-password') }}"
-mariadb_set_root_password: true
+mariadb_mysql_root_password: "{{ lookup('password', mariadb_run_dir + '/private/credentials/mysql-root-password') }}"
 
 mariadb_repository_mirror: http://mirrors.coreix.net/mariadb
 mariadb_version: 10.0
 mariadb_enable_remote: false
+mariadb_set_root_password: true
 
-dockerized_deployment: true
-
-# Below variables only apply to dockerized deployment
+# The variables below only apply to dockerized deployment
+mariadb_dockerized_deployment: false
 mariadb_docker_username: default
 mariadb_docker_imagename: mariadb
 mariadb_docker_containername: mariadb
 mariadb_port: 3306
-

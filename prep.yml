@@ -3,16 +3,15 @@
   gather_facts: True
   sudo: True
   roles:
-    - { role: marklee77.docker, when: dockerized_deployment }
+    - marklee77.docker
 
 - hosts: all
-  gather_facts: True
+  gather_facts: False
   sudo: True
   tasks:
-    - name: ensure python-mysqldb module is pre-installed for dockerized deployment
+    - name: ensure python-mysqldb module is installed
       apt:
         pkg: python-mysqldb
         state: latest
         update_cache: yes
         cache_valid_time: 600
-      when: dockerized_deployment

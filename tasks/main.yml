@@ -1,6 +1,2 @@
 ---
-- include: dockerized.yml
-  when: dockerized_deployment
-
-- include: ubuntu.yml
-  when: ansible_distribution == "Ubuntu" and not dockerized_deployment
+- include: "{% if mariadb_dockerized_deployment %}dockerized.{% else %}direct{% endif %}.yml"
