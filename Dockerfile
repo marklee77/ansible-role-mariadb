@@ -3,14 +3,8 @@ MAINTAINER Mark Stillwell <mark@stillwell.me>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-#RUN apt-get -qy clean && \
-#    rm -rf /var/lib/apt/lists/* && \
-#    apt-get -qy update && \
-#    apt-get -qy autoremove
-
 COPY . /var/cache/docker/mariadb
 WORKDIR /var/cache/docker/mariadb
-
 RUN mkdir -p roles && \
     ln -snf .. roles/marklee77.mariadb && \
     ansible-playbook -i inventories/local.ini deploy.yml -e '{ \
