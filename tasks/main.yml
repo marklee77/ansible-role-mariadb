@@ -1,2 +1,6 @@
 ---
-- include: "{% if mariadb_dockerized_deployment %}dockerized{% else %}direct{% endif %}.yml"
+- include: dockerized.yml
+  when: mariadb_dockerized_deployment
+
+- include: direct.yml
+  when: not mariadb_dockerized_deployment
