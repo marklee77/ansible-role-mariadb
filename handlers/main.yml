@@ -9,5 +9,5 @@
     image: "{{ mariadb_docker_username }}/mariadb"
     volumes_from: mariadb_data
     detach: False
-    env: ROOT_PASSWORD={{ mariadb_mysql_root_password }}
-    command: mysql mysql -e "GRANT ALL PRIVILEGES on *.* TO 'root'@'%' IDENTIFIED BY '${ROOT_PASSWORD}' WITH GRANT OPTION;"
+    command: mysql mysql -e "GRANT ALL PRIVILEGES on *.* TO 'root'@'%' IDENTIFIED BY '{{ mariadb_mysql_root_password }}' WITH GRANT OPTION;"
+

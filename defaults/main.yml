@@ -13,5 +13,6 @@ dockerized_deployment: true
 mariadb_docker_repository: https://github.com/marklee77/docker-ansible-role-mariadb.git
 mariadb_docker_username: default
 mariadb_docker_imagename: mariadb
+mariadb_docker_containername: mariadb
 mariadb_port: 3306
 

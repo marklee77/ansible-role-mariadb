@@ -28,9 +28,9 @@
 - name: ensure mariadb data container exists
   docker:
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
-    name: mariadb_data
-    command: /bin/true
+    name: "{{ mariadb_docker_containername }}_data"
     detach: no
+    command: /bin/true
     state: present
   notify:
     - set mariadb remote root password
@@ -39,7 +39,7 @@
 - name: ensure mariadb service is running
   docker:
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
-    name: mariadb_server
-    volumes_from: mariadb_data
+    name: "{{ mariadb_docker_containername }}_server"
+    volumes_from: "{{ mariadb_docker_containername }}_data"
     ports: 3306:{{ mariadb_port }}
     state: running
