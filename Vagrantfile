@@ -13,11 +13,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "prepare.yml"
+    ansible.playbook = "prep.yml"
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "dockerized.yml"
+    ansible.playbook = "deploy.yml"
   end
 
   config.vm.provision "ansible" do |ansible|

@@ -10,8 +10,8 @@ RUN apt-get -qy clean && \
     apt-get -qy autoremove
 
 ADD . ansible
-RUN ln -snf /ansible/ /ansible/roles/marklee77.mariadb && \
-    cd ansible && \
+#RUN ln -snf /ansible/ /ansible/roles/marklee77.mariadb && \
+RUN cd ansible && \
     ansible-playbook -i inventories/local.ini deploy.yml -e \
         '{ "mariadb_enable_remote" : true, "mariadb_set_root_password" : false, \
            "dockerized_deployment" : false }' && \
