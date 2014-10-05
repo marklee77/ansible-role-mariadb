@@ -1,11 +1,4 @@
 ---
-#- name: ensure that pip is installed in user home
-#  shell: curl -s https://bootstrap.pypa.io/get-pip.py | python - --user
-#         creates={{ ansible_env.HOME }}/.local/bin/pip
-
-#- name: ensure docker client libraries are installed
-#  command: "{{ ansible_env.HOME }}/.local/bin/pip install --user docker-py creates={{ ansible_env.HOME }}/.local/lib/python2.7/site-packages/docker"
-
 - name: ensure dockerfile directories exist
   file:
     path: "{{ item }}"
@@ -31,8 +24,9 @@
 - name: ensure mariadb data container exists
   docker:
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
-    command: /bin/true
     name: mariadb_data
+    command: /bin/true
+    detach: no
     state: present
   notify:
     - set mariadb remote root password
@@ -42,5 +36,5 @@
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
     name: mariadb_server
     volumes_from: mariadb_data
-    ports: 3306:{{ mariadb_port }}
+    ports: "{% if !mariadb_enable_remote %}127.0.0.1:{% endif %}3306:{{ mariadb_port }}"
     state: running
