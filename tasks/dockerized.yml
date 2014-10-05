@@ -8,12 +8,16 @@
     - "{{ ansible_env.HOME }}/.ansible_cache"
     - "{{ ansible_env.HOME }}/.ansible_cache/docker"
 
-- name: synchronize files to remote cache for Dockerfile build
-  synchronize:
-    src: ../
+#- name: copy role to remote cache for Dockerfile build
+#  copy:
+#    src: ../
+#    dest: "{{ ansible_env.HOME }}/.ansible_cache/docker/mariadb"
+
+- git:
+    repo: https://github.com/marklee77/ansible-role-mariadb.git
     dest: "{{ ansible_env.HOME }}/.ansible_cache/docker/mariadb"
-    mode: push
-    recursive: yes
+    version: dockerized
+    update: yes
 
 - name: ensure mariadb docker image has been built
   docker_image:

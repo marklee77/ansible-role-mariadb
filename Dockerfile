@@ -9,13 +9,14 @@ RUN apt-get -qy clean && \
     apt-get -qy dist-upgrade && \
     apt-get -qy autoremove
 
-ADD . ansible-role-mariadb
-RUN cd ansible-role-mariadb && \
+ADD . ansible
+RUN ln -snf /ansible/ /ansible/roles/marklee77.mariadb && \
+    cd ansible && \
     ansible-playbook -i inventories/local.ini deploy.yml -e \
         '{ "mariadb_enable_remote" : true, "mariadb_set_root_password" : false, \
            "dockerized_deployment" : false }' && \
     cd .. && \
-    rm -rf ansible-role-mariadb && \
+    rm -rf ansible && \
     service mysql stop
 
 VOLUME ["/etc/mysql", "/var/run/mysqld", "/usr/lib/mysql"]
