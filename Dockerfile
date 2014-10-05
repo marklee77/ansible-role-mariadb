@@ -12,7 +12,9 @@ RUN apt-get -qy clean && \
 
 ADD . ansible-role-mariadb
 RUN cd ansible-role-mariadb && \
-    ansible-playbook -i inventories/local.ini -e mariadb_enable_remote=true site.yml && \
+    ansible-playbook -i inventories/local.ini \
+        -e mariadb_enable_remote=true \
+        -e dockerized_deployment=false deploy.yml && \
     cd .. && \
     rm -rf ansible-role-mariadb && \
     service mysql stop

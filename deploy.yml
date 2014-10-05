@@ -1,5 +1,5 @@
 ---
 - hosts: all
-  sudo: "{{ !dockerized_deployment }}"
+  sudo: True
   roles:
     - marklee77.mariadb

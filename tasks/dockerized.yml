@@ -1,10 +1,10 @@
 ---
-- name: ensure that pip is installed in user home
-  shell: curl -s https://bootstrap.pypa.io/get-pip.py | python - --user
-         creates={{ ansible_env.HOME }}/.local/bin/pip
+#- name: ensure that pip is installed in user home
+#  shell: curl -s https://bootstrap.pypa.io/get-pip.py | python - --user
+#         creates={{ ansible_env.HOME }}/.local/bin/pip
 
-- name: ensure docker client libraries are installed
-  command: "{{ ansible_env.HOME }}/.local/bin/pip install --user docker-py creates={{ ansible_env.HOME }}/.local/lib/python2.7/site-packages/docker"
+#- name: ensure docker client libraries are installed
+#  command: "{{ ansible_env.HOME }}/.local/bin/pip install --user docker-py creates={{ ansible_env.HOME }}/.local/lib/python2.7/site-packages/docker"
 
 - name: ensure dockerfile directories exist
   file:
@@ -25,7 +25,7 @@
 - name: ensure mariadb docker image has been built
   docker_image:
     name: "{{ mariadb_docker_username }}/mariadb"
-    path: .ansible_cache/docker/mariadb
+    path: "{{ ansible_env.HOME }}/.ansible_cache/docker/mariadb"
     state: present
 
 - name: ensure mariadb data container exists
