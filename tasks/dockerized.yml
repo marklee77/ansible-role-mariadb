@@ -8,26 +8,19 @@
 #    name: docker-py
 #    state: latest
 
-- name: ensure dockerfile directories exist
-  file:
-    path: "{{ item }}"
-    mode: 0700
-    state: directory
-  with_items:
-    - "{{ ansible_env.HOME }}/.ansible_cache"
-    - "{{ ansible_env.HOME }}/.ansible_cache/docker"
+#- name: ensure dockerfile directories exist
+#  file:
+#    path: "{{ item }}"
+#    mode: 0700
+#    state: directory
+#  with_items:
+#    - "{{ ansible_env.HOME }}/.ansible_cache"
+#    - "{{ ansible_env.HOME }}/.ansible_cache/docker"
 
-#- name: check out mariadb Dockerfile repository
-#  git:
-#    repo: "{{ mariadb_docker_repository }}"
-#    dest: "{{ ansible_env.HOME }}/.ansible_cache/docker/mariadb"
-
-- name: synchronize roles directory to remote...
+- name: synchronize files to remote cache for Dockerfile build
   synchronize:
-    src: mariadb
+    src: ../
     dest: "{{ ansible_env.HOME }}/.ansible_cache/docker/mariadb"
-    copy_links: yes
-    delete: yes
     mode: push
     recursive: yes
 

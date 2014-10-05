@@ -9,15 +9,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "playbooks/prepare.yml"
+    ansible.playbook = "getroles.yml"
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "playbooks/deploy.yml"
+    ansible.playbook = "prepare.yml"
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "playbooks/demo.yml"
+    ansible.playbook = "deploy.yml"
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "demo.yml"
   end
 
 end

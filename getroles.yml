@@ -10,10 +10,3 @@
         dest: roles/marklee77.docker
         update: yes
       when: dockerized_deployment
-
-
-- hosts: all
-  gather_facts: True
-  sudo: True
-  roles:
-    - { role: marklee77.docker, when: dockerized_deployment }
