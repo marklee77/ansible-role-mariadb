@@ -2,27 +2,22 @@
 - name: ensure dockerfile directories exist
   file:
     path: "{{ item }}"
+    owner: "{{ ansible_ssh_user }}"
     mode: 0700
     state: directory
   with_items:
-    - "{{ ansible_env.HOME }}/.ansible_cache"
-    - "{{ ansible_env.HOME }}/.ansible_cache/docker"
+    - "{{ ansible_env.PWD }}/.ansible_cache"
+    - "{{ ansible_env.PWD }}/.ansible_cache/docker"
 
-#- name: copy role to remote cache for Dockerfile build
-#  copy:
-#    src: ../
-#    dest: "{{ ansible_env.HOME }}/.ansible_cache/docker/mariadb"
-
-- git:
-    repo: https://github.com/marklee77/ansible-role-mariadb.git
-    dest: "{{ ansible_env.HOME }}/.ansible_cache/docker/mariadb"
-    version: dockerized
-    update: yes
+- name: copy role to remote cache for Dockerfile build
+  synchronize:
+    src: ../
+    dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
 
 - name: ensure mariadb docker image has been built
   docker_image:
     name: "{{ mariadb_docker_username }}/mariadb"
-    path: "{{ ansible_env.HOME }}/.ansible_cache/docker/mariadb"
+    path: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
     state: present
 
 - name: ensure mariadb data container exists
@@ -35,11 +30,10 @@
   notify:
     - set mariadb remote root password
 
-# ports: "{% if !mariadb_enable_remote %}127.0.0.1:{% endif %}3306:{{ mariadb_port }}"
 - name: ensure mariadb service is running
   docker:
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
     name: "{{ mariadb_docker_containername }}_server"
     volumes_from: "{{ mariadb_docker_containername }}_data"
-    ports: 3306:{{ mariadb_port }}
+    ports: "{% if not mariadb_enable_remote %}127.0.0.1:{% endif %}{{ mariadb_port }}:3306"
     state: running
