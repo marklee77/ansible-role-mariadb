@@ -1,21 +1,19 @@
 ---
-#- name: ensure that pip is installed correctly (bug in Ubuntu pip package)
-#  shell: curl -s https://bootstrap.pypa.io/get-pip.py | python - --user
-#         creates=/home/vagrant/.local/bin/pip
+- name: ensure that pip is installed in user home
+  shell: curl -s https://bootstrap.pypa.io/get-pip.py | python - --user
+         creates={{ ansible_env.HOME }}/.local/bin/pip
 
-#- name: ensure docker client libraries are installed
-#  pip:
-#    name: docker-py
-#    state: latest
+- name: ensure docker client libraries are installed
+  command: "{{ ansible_env.HOME }}/.local/bin/pip install --user docker-py creates={{ ansible_env.HOME }}/.local/lib/python2.7/site-packages/docker"
 
-#- name: ensure dockerfile directories exist
-#  file:
-#    path: "{{ item }}"
-#    mode: 0700
-#    state: directory
-#  with_items:
-#    - "{{ ansible_env.HOME }}/.ansible_cache"
-#    - "{{ ansible_env.HOME }}/.ansible_cache/docker"
+- name: ensure dockerfile directories exist
+  file:
+    path: "{{ item }}"
+    mode: 0700
+    state: directory
+  with_items:
+    - "{{ ansible_env.HOME }}/.ansible_cache"
+    - "{{ ansible_env.HOME }}/.ansible_cache/docker"
 
 - name: synchronize files to remote cache for Dockerfile build
   synchronize:
@@ -24,25 +22,25 @@
     mode: push
     recursive: yes
 
-#- name: ensure mariadb docker image has been built
-#  docker_image:
-#    name: "{{ mariadb_docker_username }}/mariadb"
-#    path: .ansible_cache/docker/mariadb
-#    state: present
+- name: ensure mariadb docker image has been built
+  docker_image:
+    name: "{{ mariadb_docker_username }}/mariadb"
+    path: .ansible_cache/docker/mariadb
+    state: present
 
-#- name: ensure mariadb data container exists
-#  docker:
-#    image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
-#    command: /bin/true
-#    name: mariadb_data
-#    state: present
-#  notify:
-#    - set mariadb remote root password
+- name: ensure mariadb data container exists
+  docker:
+    image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
+    command: /bin/true
+    name: mariadb_data
+    state: present
+  notify:
+    - set mariadb remote root password
 
-#- name: ensure mariadb service is running
-#  docker:
-#    image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
-#    name: mariadb_server
-#    volumes_from: mariadb_data
-#    ports: 3306:{{ mariadb_port }}
-#    state: running
+- name: ensure mariadb service is running
+  docker:
+    image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
+    name: mariadb_server
+    volumes_from: mariadb_data
+    ports: 3306:{{ mariadb_port }}
+    state: running

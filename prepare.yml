@@ -4,3 +4,16 @@
   sudo: True
   roles:
     - { role: marklee77.docker, when: dockerized_deployment }
+
+- hosts: all
+  gather_facts: True
+  sudo: True
+  tasks:
+
+    - name: ensure that login user is in the docker group
+      user:
+        name: "{{ ansible_ssh_user }}"
+        groups: docker
+        append: yes
+        state: present
+      when: dockerized_deployment
