@@ -5,10 +5,10 @@
     state: restarted
 
 # FIXME: this could be done with a script, but would that be more secure?
-- name: set mariadb remote root password
+- name: set mariadb root password for docker host
   docker:
     image: "{{ mariadb_docker_username }}/mariadb"
     volumes_from: mariadb_data
     detach: False
-    command: mysql mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '{{ mariadb_mysql_root_password }}' WITH GRANT OPTION;"
+    command: mysql mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'{{ ansible_docker0['ipv4']['address'] }}' IDENTIFIED BY '{{ mariadb_mysql_root_password }}' WITH GRANT OPTION;"
 
