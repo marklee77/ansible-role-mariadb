@@ -30,13 +30,15 @@
     - mariadb-client
     - python-mysqldb
 
-- name: ensure mariadb does not bind to localhost if remote connections are enabled
-  lineinfile:
+- name: ensure mariadb is configured to bind to the specified address and port
+  ini_file:
     dest: /etc/mysql/my.cnf
-    regexp: ^bind-address\s*=\s*127.0.0.1
-    line: bind-address = 127.0.0.1
-    insertafter: "\\[mysqld\\]"
-    state: "{% if mariadb_enable_remote %}absent{% else %}present{% endif %}"
+    section: mysqld
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { option: bind-address, value: "{{ mariadb_bind_address }}" }
+    - { option: port, value: "{{ mariadb_port }}" }
   notify:
     - restart mariadb
 

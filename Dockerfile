@@ -7,7 +7,7 @@ COPY . /var/cache/docker/mariadb
 WORKDIR /var/cache/docker/mariadb
 RUN mkdir -p roles && ln -snf .. roles/marklee77.mariadb 
 RUN ansible-playbook -i inventories/local.ini deploy.yml -e '{ \
-        "mariadb_enable_remote" : true, \
+        "mariadb_bind_address" : 0.0.0.0, \
         "mariadb_set_root_password" : false, \
         "mariadb_dockerized_deployment" : false }' && \
     rm -rf private && \
