@@ -28,13 +28,13 @@
     detach: no
     command: /bin/true
     state: present
-  notify:
-    - set mariadb remote root password
 
 - name: ensure mariadb service is running
   docker:
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
     name: "{{ mariadb_docker_containername }}_server"
     volumes_from: "{{ mariadb_docker_containername }}_data"
-    ports: "{% if not mariadb_enable_remote %}127.0.0.1:{% endif %}{{ mariadb_port }}:3306"
+    ports: "{{ mariadb_bind_address }}:{{ mariadb_port }}:3306"
     state: running
+  notify:
+    - set mariadb remote root password
