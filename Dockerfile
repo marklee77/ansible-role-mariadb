@@ -11,7 +11,8 @@ RUN ansible-playbook -i inventories/local.ini deploy.yml \
     rm -rf private && \
     service mysql stop
 
-VOLUME ["/etc/mysql", "/var/run/mysqld", "/usr/lib/mysql", "/var/log/mysql"]
+VOLUME [ "/root", "/etc/mysql", "/var/run/mysqld", "/usr/lib/mysql", \
+         "/var/log/mysql"]
 
 CMD [ "/usr/sbin/mysqld", \
       "--basedir=/usr", \

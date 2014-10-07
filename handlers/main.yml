@@ -15,4 +15,4 @@
                 "mariadb_dockerize_context" : "online_configuration",
                 "mariadb_mysql_root_password" : 
                   "{{ mariadb_mysql_root_password }}" }'
-    state: restarted
+    state: present

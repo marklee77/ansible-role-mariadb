@@ -1,7 +1,4 @@
 ---
-- debug:
-    msg: "{{ mariadb_mysql_root_password }}"
-
 - name: update mariadb root password for local root account
   mysql_user: 
     name: root 
@@ -27,4 +24,4 @@
     password: "{{ mariadb_mysql_root_password }}" 
     priv: "*.*:ALL,GRANT"
     state: present
-  when: mariadb_docker_context is defined
+  when: mariadb_dockerize_context is defined
