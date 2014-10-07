@@ -36,8 +36,9 @@
     detach: no
     state: present
 
-- pause:
-    seconds: 10
+- name: need to pause between creation of data container and starting server
+  pause:
+    seconds: 5
 
 - name: ensure mariadb service is running
   docker:
