@@ -15,9 +15,6 @@
     dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
     delete: yes
 
-#  notify:
-#    - ensure mariadb docker image has been built
-
 - name: ensure mariadb docker image has been built
   docker_image:
     name: "{{ mariadb_docker_username }}/mariadb"
