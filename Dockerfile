@@ -11,14 +11,13 @@ RUN ansible-playbook -i inventories/local.ini deploy.yml \
     rm -rf private && \
     service mysql stop
 
-VOLUME ["/etc/mysql", "/var/run/mysqld", "/usr/lib/mysql"]
+VOLUME ["/etc/mysql", "/var/run/mysqld", "/usr/lib/mysql", "/var/log/mysql"]
 
 CMD [ "/usr/sbin/mysqld", \
       "--basedir=/usr", \
       "--datadir=/var/lib/mysql", \
       "--pid-file=/var/run/mysqld/mysqld.pid", \
       "--plugin-dir=/usr/lib/mysql/plugin", \
-      "--port=3306", \
       "--socket=/var/run/mysqld/mysqld.sock", \
       "--user=mysql" ]
 

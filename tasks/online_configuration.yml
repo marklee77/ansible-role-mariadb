@@ -1,4 +1,7 @@
 ---
+- debug:
+    msg: "{{ mariadb_mysql_root_password }}"
+
 - name: update mariadb root password for local root account
   mysql_user: 
     name: root 
