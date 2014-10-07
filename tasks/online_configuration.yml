@@ -17,7 +17,6 @@
     group: root 
     mode: 0600
 
-#    host: "{{ ansible_docker0['ipv4']['address'] }}"
 - name: update mariadb root password for docker host
   mysql_user: 
     name: root 
