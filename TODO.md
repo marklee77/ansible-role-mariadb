@@ -1,0 +1,2 @@
+- user .my.cnf configured to connect to 127.0.0.1 if no socket?
+- automatic rebuild on changes that might affect dockerfile?
