@@ -12,6 +12,8 @@
     detach: no
     command: >
               cd /var/cache/docker/mariadb &&
-              ansible-playbook -i inventories/local.ini deploy.yml
-                -e mariadb_dockerize_context=online_configuration
+              ansible-playbook -i inventories/local.ini deploy.yml -e '{
+                "mariadb_dockerize_context" : "online_configuration",
+                "mariadb_mysql_root_password" : "{{ mariadb_mysql_root_password }}"
+              }'
     state: restarted

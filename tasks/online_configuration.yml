@@ -17,15 +17,11 @@
     group: root 
     mode: 0600
 
-- name: update mariadb root password for all other local root accounts
+- name: update mariadb root password for docker host
   mysql_user: 
     name: root 
-    host: "{{ item }}" 
+    host: "{{ ansible_docker0['ipv4']['address'] }}"
     password: "{{ mariadb_mysql_root_password }}" 
     priv: "*.*:ALL,GRANT"
     state: present
-  with_items:
-    - "{{ ansible_hostname }}"
-    - 127.0.0.1
-    - ::1
-
+  when: mariadb_docker_context is defined
