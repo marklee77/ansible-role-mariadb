@@ -48,4 +48,4 @@
     detach: yes
     state: running
   notify:
-    - perform mariadb online configuration
+    - perform mariadb docker online configuration

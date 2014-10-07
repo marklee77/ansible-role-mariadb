@@ -16,12 +16,4 @@ VOLUME [ "/root", "/etc/mysql", "/var/run/mysqld", "/usr/lib/mysql", \
 
 CMD [ "/usr/sbin/mysqld", "--user=mysql" ]
 
-#CMD [ "/usr/sbin/mysqld", \
-#      "--basedir=/usr", \
-#      "--datadir=/var/lib/mysql", \
-#      "--pid-file=/var/run/mysqld/mysqld.pid", \
-#      "--plugin-dir=/usr/lib/mysql/plugin", \
-#      "--socket=/var/run/mysqld/mysqld.sock", \
-#      "--user=mysql" ]
-
 EXPOSE 3306
