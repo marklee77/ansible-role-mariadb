@@ -3,16 +3,14 @@
   service: 
     name: mysql
     state: restarted
-  when: mariadb_dockerize_context is not defined
+  when: not mariadb_dockerized_deploy and 
+        mariadb_dockerize_context is not defined
 
 - name: perform mariadb online configuration
   docker:
-    image: "{{ mariadb_docker_username }}/mariadb"
+    image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
+    name: "{{ mariadb_docker_containername }}_configure"
     volumes_from: mariadb_data
     detach: no
-    command: >
-              ansible-playbook -i inventories/local.ini deploy.yml -e '{
-                "mariadb_dockerize_context" : "online_configuration",
-                "mariadb_mysql_root_password" : 
-                  "{{ mariadb_mysql_root_password }}" }'
+    command: "ansible-playbook -i inventories/local.ini deploy.yml -e '{ \"mariadb_dockerize_context\" : \"online_configuration\", \"mariadb_docker_host\" : \"{{ ansible_docker0['ipv4']['address'] }}\", \"mariadb_mysql_root_password\" : \"{{ mariadb_mysql_root_password }}\" }'"
     state: present

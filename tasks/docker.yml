@@ -15,6 +15,9 @@
     dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
     delete: yes
 
+#  notify:
+#    - ensure mariadb docker image has been built
+
 - name: ensure mariadb docker image has been built
   docker_image:
     name: "{{ mariadb_docker_username }}/mariadb"
@@ -25,13 +28,16 @@
   docker:
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
     name: "{{ mariadb_docker_containername }}_data"
-    detach: no
     command: >
               ansible-playbook -i inventories/local.ini deploy.yml -e '{ 
                 "mariadb_dockerize_context" : "offline_configuration", 
                 "mariadb_bind_address" : "0.0.0.0", 
                 "mariadb_port" : 3306 }'
+    detach: no
     state: present
+
+- pause:
+    seconds: 10
 
 - name: ensure mariadb service is running
   docker:
@@ -39,6 +45,7 @@
     name: "{{ mariadb_docker_containername }}_server"
     volumes_from: "{{ mariadb_docker_containername }}_data"
     ports: "{{ mariadb_bind_address }}:{{ mariadb_port }}:3306"
+    detach: yes
     state: running
   notify:
     - perform mariadb online configuration
