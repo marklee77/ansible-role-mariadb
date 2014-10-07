@@ -9,6 +9,9 @@
   docker:
     image: "{{ mariadb_docker_username }}/mariadb"
     volumes_from: mariadb_data
-    detach: False
-    command: mysql mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'{{ ansible_docker0['ipv4']['address'] }}' IDENTIFIED BY '{{ mariadb_mysql_root_password }}' WITH GRANT OPTION;"
-
+    detach: no
+    command: >
+              cd /var/cache/docker/mariadb &&
+              ansible-playbook -i inventories/local.ini deploy.yml
+                -e mariadb_dockerize_context=online_configuration
+    state: restarted

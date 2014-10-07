@@ -1,6 +1,16 @@
 ---
-- include: dockerized.yml
-  when: mariadb_dockerized_deployment
+- include: docker.yml
+  when: mariadb_dockerized_deployment and 
+        mariadb_dockerize_context is not defined
 
-- include: direct.yml
-  when: not mariadb_dockerized_deployment
+- include: install.yml
+  when: not mariadb_dockerized_deployment or 
+        mariadb_dockerize_context == "install"
+
+- include: offline_configuration.yml
+  when: not mariadb_dockerized_deployment or
+        mariadb_dockerize_context == "offline_configuration"
+
+- include: online_configuration.yml
+  when: not mariadb_dockerized_deployment or
+        mariadb_dockerize_context == "online_configuration"

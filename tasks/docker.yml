@@ -26,7 +26,12 @@
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
     name: "{{ mariadb_docker_containername }}_data"
     detach: no
-    command: /bin/true
+    command: >
+              cd /var/cache/docker/mariadb && 
+              ansible-playbook -i inventories/local.ini deploy.yml 
+                -e '{ "mariadb_dockerize_context" : "offline_configuration", 
+                      "mariadb_bind_address" : "0.0.0.0", 
+                      "mariadb_port" : 3306 }'
     state: present
 
 - name: ensure mariadb service is running
@@ -37,4 +42,4 @@
     ports: "{{ mariadb_bind_address }}:{{ mariadb_port }}:3306"
     state: running
   notify:
-    - set mariadb root password for docker host
+    - perform mariadb online configuration
