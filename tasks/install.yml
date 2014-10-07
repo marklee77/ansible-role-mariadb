@@ -60,6 +60,3 @@
     - 127.0.0.1
     - ::1
     - "%"
-
-- include: setrootpw.yml
-  when: mariadb_set_root_password

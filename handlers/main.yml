@@ -3,8 +3,8 @@
   service: 
     name: mysql
     state: restarted
+  when: mariadb_dockerize_context is not defined
 
-# FIXME: this could be done with a script, but would that be more secure?
 - name: set mariadb root password for docker host
   docker:
     image: "{{ mariadb_docker_username }}/mariadb"
