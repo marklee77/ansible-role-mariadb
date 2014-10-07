@@ -5,15 +5,14 @@
     state: restarted
   when: mariadb_dockerize_context is not defined
 
-- name: set mariadb root password for docker host
+- name: perform mariadb online configuration
   docker:
     image: "{{ mariadb_docker_username }}/mariadb"
     volumes_from: mariadb_data
     detach: no
     command: >
-              cd /var/cache/docker/mariadb &&
               ansible-playbook -i inventories/local.ini deploy.yml -e '{
                 "mariadb_dockerize_context" : "online_configuration",
-                "mariadb_mysql_root_password" : "{{ mariadb_mysql_root_password }}"
-              }'
+                "mariadb_mysql_root_password" : 
+                  "{{ mariadb_mysql_root_password }}" }'
     state: restarted
