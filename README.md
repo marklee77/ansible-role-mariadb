@@ -20,8 +20,8 @@ Role Variables
 - mariadb_repository_mirror: http://mirrors.coreix.net/mariadb by default.
 - mariadb_version: 10.0
 - mariadb_mysql_root_password: random value
-- mariadb_enable_remote: false
-- mariadb_set_root_password: true
+- mariadb_bind_address: 127.0.0.1
+- mariadb_port: 3306
 
 The variables below only affect the dockerized deployment:
 
@@ -29,7 +29,6 @@ The variables below only affect the dockerized deployment:
 - mariadb_docker_username: default
 - mariadb_docker_imagename: mariadb
 - mariadb_docker_containername: mariadb
-- mariadb_port: 3306
 
 Example Playbook
 -------------------------
