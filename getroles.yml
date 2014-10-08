@@ -9,4 +9,3 @@
         repo: 'https://github.com/marklee77/ansible-role-docker.git'
         dest: roles/marklee77.docker
         update: yes
-      when: mariadb_dockerized_deployment
