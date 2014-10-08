@@ -3,7 +3,7 @@
   service: 
     name: mysql
     state: restarted
-  when: not mariadb_dockerized_deploy and 
+  when: not mariadb_dockerized_deployment and 
         mariadb_dockerize_context is not defined
 
 - name: perform mariadb docker online configuration
