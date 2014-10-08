@@ -1,2 +1,3 @@
-- user .my.cnf configured to connect to 127.0.0.1 if no socket?
+- option to map unix socket to local or to *not* map ip address...
+- user .my.cnf configured to connect to mariadb_bind_address:mariadb_port if bound and no socket?
 - automatic rebuild on changes that might affect dockerfile?
