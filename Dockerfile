@@ -7,12 +7,12 @@ COPY . /var/cache/docker/mariadb
 WORKDIR /var/cache/docker/mariadb
 RUN mkdir -p roles && ln -snf .. roles/marklee77.mariadb 
 RUN ansible-playbook -i inventories/local.ini deploy.yml \
-      -e '{ "mariadb_dockerize_context" : "install" }' &&\
+      -e '{ "mariadb_dockerize_context" : "install" }' && \
     rm -rf private && \
     service mysql stop
 
 VOLUME [ "/root", "/etc/mysql", "/var/run/mysqld", "/usr/lib/mysql", \
-         "/var/log"]
+         "/var/log" ]
 
 CMD [ "/usr/sbin/mysqld", "--user=mysql" ]
 

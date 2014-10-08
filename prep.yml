@@ -3,7 +3,7 @@
   gather_facts: True
   sudo: True
   roles:
-    - marklee77.docker
+    - { role: marklee77.docker, when: mariadb_dockerized_deployment }
 
 - hosts: all
   gather_facts: False
