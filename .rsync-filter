@@ -1,5 +1,13 @@
+- /AUTHORS
+- /LICENSE
+- /Vagrantfile
+- /*.md
+- /.dockerignore
 - /.git
+- /.gitignore
 - /.vagrant
++ /deploy.yml
+- /*.yml
 - /group_vars
 - /private
 + /roles/marklee77.mariadb
