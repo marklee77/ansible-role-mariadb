@@ -34,9 +34,10 @@
     detach: no
     state: present
 
+# FIXME: mutex!
 - name: need to pause between creation of data container and starting server
   pause:
-    seconds: 5
+    seconds: 1
 
 - name: ensure mariadb service is running
   docker:
@@ -46,6 +47,8 @@
     ports: "{{ mariadb_bind_address }}:{{ mariadb_port }}:3306"
     detach: yes
     state: running
+
+# FIXME: mutex!
 
 - name: perform mariadb docker online configuration
   docker:
