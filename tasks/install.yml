@@ -48,3 +48,9 @@
     - 127.0.0.1
     - ::1
     - "%"
+
+- name: ensure mariadb is properly shut down for docker
+  service: 
+    name: mysql
+    state: stopped
+  when: mariadb_dockerized_deployment

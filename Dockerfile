@@ -3,13 +3,11 @@ MAINTAINER Mark Stillwell <mark@stillwell.me>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-COPY . /var/cache/docker/mariadb
-WORKDIR /var/cache/docker/mariadb
+COPY . /var/cache/ansible/mariadb
+WORKDIR /var/cache/ansible/mariadb
 RUN mkdir -p roles && ln -snf .. roles/marklee77.mariadb 
-RUN ansible-playbook -i inventories/local.ini deploy.yml \
-      -e '{ "mariadb_dockerize_context" : "install" }' && \
-    rm -rf private && \
-    service mysql stop
+RUN ansible-playbook -i inventories/local.ini deploy.yml -e '{ \
+      "mariadb_dockerize_context" : "install" }'
 
 VOLUME [ "/root", "/etc/mysql", "/var/run/mysqld", "/usr/lib/mysql", \
          "/var/log" ]
