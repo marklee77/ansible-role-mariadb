@@ -1,7 +1,0 @@
----
-mariadb_run_dir: "{{ lookup('env', 'PWD') }}"
-mariadb_mysql_root_password: >
-  "{{ lookup('password', mariadb_run_dir + 
-                         '/private/credentials/mysql-root-password 
-                          length=20 
-                          chars=ascii_letters,digits') }}"

@@ -1,5 +1,5 @@
 ---
-maridb_run_dir: "{{ lookup('env', 'PWD') }}"
+mariadb_run_dir: "{{ lookup('env', 'PWD') }}"
 
 mariadb_mysql_root_password: >
   "{{ lookup('password', mariadb_run_dir +
