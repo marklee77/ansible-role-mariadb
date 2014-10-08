@@ -2,5 +2,4 @@
 - /.vagrant
 - /group_vars
 - /private
-- /roles/*
-+ /roles/marklee77.mariadb
+- /roles
