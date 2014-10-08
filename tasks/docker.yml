@@ -37,7 +37,7 @@
 # FIXME: mutex!
 - name: need to pause between creation of data container and starting server
   pause:
-    seconds: 1
+    seconds: 5
 
 - name: ensure mariadb service is running
   docker:
