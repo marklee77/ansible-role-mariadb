@@ -9,7 +9,7 @@
     - "{{ ansible_env.PWD }}/.ansible_cache"
     - "{{ ansible_env.PWD }}/.ansible_cache/docker"
 
-- name: copy role to remote cache for Dockerfile build
+- name: synchronize role to remote cache for Dockerfile build
   synchronize:
     src: ../
     dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
@@ -34,10 +34,11 @@
     detach: no
     state: present
 
-# FIXME: mutex!
-- name: need to pause between creation of data container and starting server
-  pause:
-    seconds: 5
+- name: wait until offline configuration is completed
+  command: docker wait "{{ mariadb_docker_containername }}_data"
+  register: docker_wait
+  changed_when: false
+  failed_when: docker_wait.stdout != "0"
 
 - name: ensure mariadb service is running
   docker:
@@ -48,7 +49,12 @@
     detach: yes
     state: running
 
-# FIXME: mutex!
+- name: wait until the mariadb service is ready
+  wait_for:
+    delay: 1
+    host: "{{ mariadb_bind_address }}"
+    port: "{{ mariadb_port }}"
+    state: started
 
 - name: perform mariadb docker online configuration
   docker:
