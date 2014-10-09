@@ -49,13 +49,6 @@
     detach: yes
     state: running
 
-- name: wait until the mariadb service is ready
-  wait_for:
-    delay: 1
-    host: "{{ mariadb_bind_address }}"
-    port: "{{ mariadb_port }}"
-    state: started
-
 - name: perform mariadb docker online configuration
   docker:
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"

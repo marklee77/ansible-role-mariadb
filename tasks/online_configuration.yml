@@ -1,4 +1,10 @@
 ---
+- name: wait until the mariadb service is ready
+  wait_for:
+    delay: 1
+    path: /var/run/mysqld/mysqld.sock
+    state: present
+
 - name: update mariadb root password for local root account
   mysql_user: 
     name: root 
