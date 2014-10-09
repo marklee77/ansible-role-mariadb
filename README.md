@@ -53,6 +53,10 @@ Known Issues
 
 - the dockerized deployment still requires sudo access, even though a member of 
   the docker group should be able to build and deploy containers without sudo.
+- there is no way to override the mariadb repository and version from a 
+  deployment, another role, or the command line. This is because the files are 
+  copied to the server and built on the receiving end. It would be possible to 
+  use a template instead, but then that would break docker.io automatic builds.
 
 Todo
 ----
