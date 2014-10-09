@@ -61,3 +61,9 @@
         "mariadb_mysql_root_password" : "{{ mariadb_mysql_root_password }}" }'
     state: present
 
+- name: wait until online configuration is completed
+  command: docker wait "{{ mariadb_docker_containername }}_configure"
+  register: docker_wait
+  changed_when: false
+  failed_when: docker_wait.stdout != "0"
+
