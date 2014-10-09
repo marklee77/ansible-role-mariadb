@@ -57,5 +57,10 @@ Known Issues
 Todo
 ----
 
+- need to make sure to pass through *all* variables that might be overwritten...
 - consider making mapping of mariadb port to host interface optional
-
+- option to map unix socket to local or to *not* map ip address...
+- user .my.cnf configured to connect to mariadb_bind_address:mariadb_port if 
+  bound and no socket?
+- automatic rebuild on changes that might affect dockerfile?
+- verify no private credential directory is being created...

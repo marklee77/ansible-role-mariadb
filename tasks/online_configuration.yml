@@ -1,5 +1,5 @@
 ---
-- name: wait until the mariadb service is ready
+- name: wait until mariadb service is ready
   wait_for:
     delay: 1
     path: /var/run/mysqld/mysqld.sock
