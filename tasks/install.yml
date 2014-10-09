@@ -6,6 +6,7 @@
     update_cache: yes 
     cache_valid_time: 600
   with_items:
+    - python-mysqldb
     - python-software-properties
 
 - name: ensure mariadb repository public key is installed
@@ -19,7 +20,7 @@
     update_cache: yes
     state: present
 
-- name: ensure mariadb packages and ansible dependencies are installed
+- name: ensure mariadb packages are installed
   apt: 
     pkg: "{{ item }}"
     state: latest 
@@ -28,7 +29,6 @@
   with_items:
     - mariadb-server
     - mariadb-client
-    - python-mysqldb
 
 - name: ensure mariadb is started and enabled
   service: 
@@ -51,4 +51,4 @@
   service: 
     name: mysql
     state: stopped
-  when: mariadb_dockerized_deployment
+  when: mariadb_dockerize_context is defined
