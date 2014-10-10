@@ -92,7 +92,7 @@
   changed_when: false
 
 - name: collect online configuration log
-  command: docker logs "{{ mariadb_docker_containername }}_data"
+  command: docker logs "{{ mariadb_docker_containername }}_configure"
   register: online_configuration_log
   changed_when: false
 
