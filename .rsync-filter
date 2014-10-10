@@ -9,6 +9,7 @@
 + /deploy.yml
 - /*.yml
 - /group_vars
+- /playbooks/group_vars/*
 - /private
 + /roles/marklee77.mariadb
 - /roles/*

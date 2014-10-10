@@ -1,0 +1,6 @@
+---
+mariadb_repository_mirror: "{{ mariadb_repository_mirror }}"
+mariadb_version: "{{ mariadb_version }}"
+mariadb_bind_address: 0.0.0.0
+mariadb_port: 3306
+mariadb_docker_host: "{{ ansible_docker0['ipv4']['address'] }}"

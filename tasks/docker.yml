@@ -13,8 +13,14 @@
   synchronize:
     src: ../
     dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
-    links: yes
+    links: no
     delete: yes
+
+- name: update configuration used to build docker image from template
+  template:
+    src: ansible_cache/docker/mariadb/playbooks/group_vars/all.yml
+    dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb/playbooks/group_vars/all.yml"
+    mode: 0600
 
 - name: ensure mariadb docker image has been built
   docker_image:
@@ -28,9 +34,7 @@
     name: "{{ mariadb_docker_containername }}_data"
     command: >
       ansible-playbook 
-        -i inventories/local.ini playbooks/offline_configuration.yml -e '{
-          "mariadb_bind_address" : "0.0.0.0", 
-          "mariadb_port" : 3306 }'
+        -i inventories/local.ini playbooks/offline_configuration.yml
     detach: no
     state: present
 
@@ -39,6 +43,15 @@
   register: docker_wait
   changed_when: false
   failed_when: docker_wait.stdout != "0"
+
+- name: collect offline configuration log
+  command: docker logs "{{ mariadb_docker_containername }}_data"
+  register: offline_configuration_log
+  changed_when: false
+
+- name: display offline configuration log
+  debug:
+    msg: "{{ offline_configuration_log.stdout }}"
 
 - name: ensure mariadb service is running
   docker:
@@ -58,7 +71,6 @@
     command: >
       ansible-playbook 
         -i inventories/local.ini playbooks/online_configuration.yml -e '{ 
-          "mariadb_docker_host" : "{{ ansible_docker0['ipv4']['address'] }}", 
           "mariadb_mysql_root_password" : "{{ mariadb_mysql_root_password }}" }'
     state: present
 
@@ -67,4 +79,14 @@
   register: docker_wait
   changed_when: false
   failed_when: docker_wait.stdout != "0"
+
+- name: collect online configuration log
+  command: docker logs "{{ mariadb_docker_containername }}_data"
+  register: online_configuration_log
+  changed_when: false
+
+- name: display online configuration log
+  debug:
+    msg: "{{ online_configuration_log.stdout }}"
+
 
