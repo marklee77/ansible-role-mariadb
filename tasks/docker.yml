@@ -1,5 +1,5 @@
 ---
-- name: ensure dockerfile directories exist
+- name: ensure docker image build directories exist
   file:
     path: "{{ item }}"
     owner: "{{ ansible_ssh_user }}"
@@ -14,7 +14,16 @@
     src: ../
     dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
     links: no
-    delete: yes
+    delete: no
+
+- name: ensure docker image configuration directories exist
+  file:
+    path: "{{ item }}"
+    owner: "{{ ansible_ssh_user }}"
+    state: directory
+  with_items:
+    - "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb/playbooks"
+    - "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb/playbooks/group_vars"
 
 - name: update configuration used to build docker image from template
   template:
@@ -44,14 +53,14 @@
   changed_when: false
   failed_when: docker_wait.stdout != "0"
 
-- name: collect offline configuration log
-  command: docker logs "{{ mariadb_docker_containername }}_data"
-  register: offline_configuration_log
-  changed_when: false
+#- name: collect offline configuration log
+#  command: docker logs "{{ mariadb_docker_containername }}_data"
+#  register: offline_configuration_log
+#  changed_when: false
 
-- name: display offline configuration log
-  debug:
-    msg: "{{ offline_configuration_log.stdout }}"
+#- name: display offline configuration log
+#  debug:
+#    msg: "{{ offline_configuration_log.stdout }}"
 
 - name: ensure mariadb service is running
   docker:
@@ -80,13 +89,13 @@
   changed_when: false
   failed_when: docker_wait.stdout != "0"
 
-- name: collect online configuration log
-  command: docker logs "{{ mariadb_docker_containername }}_data"
-  register: online_configuration_log
-  changed_when: false
+#- name: collect online configuration log
+#  command: docker logs "{{ mariadb_docker_containername }}_data"
+#  register: online_configuration_log
+#  changed_when: false
 
-- name: display online configuration log
-  debug:
-    msg: "{{ online_configuration_log.stdout }}"
+#- name: display online configuration log
+#  debug:
+#    msg: "{{ online_configuration_log.stdout }}"
 
 
