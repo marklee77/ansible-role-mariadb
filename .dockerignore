@@ -12,3 +12,4 @@ test.yml
 group_vars
 private
 roles
+templates

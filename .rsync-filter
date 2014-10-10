@@ -1,7 +1,4 @@
-- /AUTHORS
-- /LICENSE
 - /Vagrantfile
-- /*.md
 - /.dockerignore
 - /.git
 - /.gitignore
@@ -9,6 +6,7 @@
 + /deploy.yml
 - /*.yml
 - /group_vars
-- /playbooks/group_vars/*
+- /playbooks/group_vars
 - /private
 - /roles
+- /templates
