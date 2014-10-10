@@ -50,7 +50,6 @@
   command: docker wait "{{ mariadb_docker_containername }}_data"
   register: docker_wait
   changed_when: false
-  failed_when: docker_wait.stdout != "0"
 
 - name: collect offline configuration log
   command: docker logs "{{ mariadb_docker_containername }}_data"
@@ -61,6 +60,11 @@
   debug:
     msg: "{{ offline_configuration_log.stdout_lines }}"
 
+- name: fail on offline configuration failure
+  assert:
+    that: docker_wait.stdout == "0"
+
+  failed_when: docker_wait.stdout != "0"
 - name: ensure mariadb service is running
   docker:
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
@@ -86,7 +90,6 @@
   command: docker wait "{{ mariadb_docker_containername }}_configure"
   register: docker_wait
   changed_when: false
-  failed_when: docker_wait.stdout != "0"
 
 - name: collect online configuration log
   command: docker logs "{{ mariadb_docker_containername }}_data"
@@ -97,4 +100,6 @@
   debug:
     msg: "{{ online_configuration_log.stdout_lines }}"
 
-
+- name: fail on online configuration failure
+  assert:
+    that: docker_wait.stdout == "0"
