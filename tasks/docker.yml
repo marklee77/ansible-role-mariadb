@@ -3,7 +3,6 @@
   file:
     path: "{{ item }}"
     owner: "{{ ansible_ssh_user }}"
-    mode: 0700
     state: directory
   with_items:
     - "{{ ansible_env.PWD }}/.ansible_cache"
@@ -13,8 +12,9 @@
   synchronize:
     src: ../
     dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
-    links: no
-    delete: no
+    archive: no
+    checksum: yes
+    recursive: yes
 
 - name: ensure docker image configuration directories exist
   file:
@@ -28,6 +28,7 @@
 - name: update configuration used to build docker image from template
   template:
     src: ansible_cache/docker/mariadb/playbooks/group_vars/all.yml
+    owner: "{{ ansible_ssh_user }}"
     dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb/playbooks/group_vars/all.yml"
     mode: 0600
 
@@ -53,14 +54,14 @@
   changed_when: false
   failed_when: docker_wait.stdout != "0"
 
-#- name: collect offline configuration log
-#  command: docker logs "{{ mariadb_docker_containername }}_data"
-#  register: offline_configuration_log
-#  changed_when: false
+- name: collect offline configuration log
+  command: docker logs "{{ mariadb_docker_containername }}_data"
+  register: offline_configuration_log
+  changed_when: false
 
-#- name: display offline configuration log
-#  debug:
-#    msg: "{{ offline_configuration_log.stdout }}"
+- name: display offline configuration log
+  debug:
+    msg: "{{ offline_configuration_log.stdout_lines }}"
 
 - name: ensure mariadb service is running
   docker:
@@ -89,13 +90,13 @@
   changed_when: false
   failed_when: docker_wait.stdout != "0"
 
-#- name: collect online configuration log
-#  command: docker logs "{{ mariadb_docker_containername }}_data"
-#  register: online_configuration_log
-#  changed_when: false
+- name: collect online configuration log
+  command: docker logs "{{ mariadb_docker_containername }}_data"
+  register: online_configuration_log
+  changed_when: false
 
-#- name: display online configuration log
-#  debug:
-#    msg: "{{ online_configuration_log.stdout }}"
+- name: display online configuration log
+  debug:
+    msg: "{{ online_configuration_log.stdout_lines }}"
 
 
