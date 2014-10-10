@@ -3,16 +3,10 @@
   when: mariadb_dockerized_deployment
 
 - include: install.yml
-  when: not mariadb_dockerized_deployment and (
-        mariadb_dockerize_context is not defined or
-        mariadb_dockerize_context == "install" )
+  when: not mariadb_dockerized_deployment
 
 - include: offline_configuration.yml
-  when: not mariadb_dockerized_deployment and (
-        mariadb_dockerize_context is not defined or
-        mariadb_dockerize_context == "offline_configuration" )
+  when: not mariadb_dockerized_deployment 
 
 - include: online_configuration.yml
-  when: not mariadb_dockerized_deployment and (
-        mariadb_dockerize_context is not defined or
-        mariadb_dockerize_context == "online_configuration" )
+  when: not mariadb_dockerized_deployment

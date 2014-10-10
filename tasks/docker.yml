@@ -27,10 +27,10 @@
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
     name: "{{ mariadb_docker_containername }}_data"
     command: >
-      ansible-playbook -i inventories/local.ini deploy.yml -e '{ 
-        "mariadb_dockerize_context" : "offline_configuration", 
-        "mariadb_bind_address" : "0.0.0.0", 
-        "mariadb_port" : 3306 }'
+      ansible-playbook 
+        -i inventories/local.ini playbooks/offline_configuration.yml -e '{
+          "mariadb_bind_address" : "0.0.0.0", 
+          "mariadb_port" : 3306 }'
     detach: no
     state: present
 
@@ -56,9 +56,10 @@
     volumes_from: "{{ mariadb_docker_containername }}_data"
     detach: no
     command: >
-      ansible-playbook -i inventories/local.ini deploy.yml -e '{ "mariadb_dockerize_context" : "online_configuration",
-        "mariadb_docker_host" : "{{ ansible_docker0['ipv4']['address'] }}", 
-        "mariadb_mysql_root_password" : "{{ mariadb_mysql_root_password }}" }'
+      ansible-playbook 
+        -i inventories/local.ini playbooks/online_configuration.yml -e '{ 
+          "mariadb_docker_host" : "{{ ansible_docker0['ipv4']['address'] }}", 
+          "mariadb_mysql_root_password" : "{{ mariadb_mysql_root_password }}" }'
     state: present
 
 - name: wait until online configuration is completed
