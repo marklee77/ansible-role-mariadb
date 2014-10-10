@@ -16,13 +16,12 @@
     checksum: yes
     recursive: yes
 
-- name: ensure docker image configuration directories exist
+- name: ensure docker image configuration directory exists
   file:
     path: "{{ item }}"
     owner: "{{ ansible_ssh_user }}"
     state: directory
   with_items:
-    - "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb/playbooks"
     - "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb/playbooks/group_vars"
 
 - name: update configuration used to build docker image from template
@@ -30,7 +29,6 @@
     src: ansible_cache/docker/mariadb/playbooks/group_vars/all.yml
     owner: "{{ ansible_ssh_user }}"
     dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb/playbooks/group_vars/all.yml"
-    mode: 0600
 
 - name: ensure mariadb docker image has been built
   docker_image:
