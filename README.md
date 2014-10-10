@@ -53,18 +53,11 @@ Known Issues
 
 - the dockerized deployment still requires sudo access, even though a member of 
   the docker group should be able to build and deploy containers without sudo.
-- there is no way to override the mariadb repository and version from a 
-  deployment, another role, or the command line. This is because the files are 
-  copied to the server and built on the receiving end. It would be possible to 
-  use a template instead, but then that would break docker.io automatic builds.
 
 Todo
 ----
 
-- need to make sure to pass through *all* variables that might be overwritten...
-- consider making mapping of mariadb port to host interface optional
 - option to map unix socket to local or to *not* map ip address...
 - user .my.cnf configured to connect to mariadb_bind_address:mariadb_port if 
   bound and no socket?
 - automatic rebuild on changes that might affect dockerfile?
-- verify no private credential directory is being created...
