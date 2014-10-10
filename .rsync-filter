@@ -9,4 +9,4 @@
 - /playbooks/group_vars
 - /private
 - /roles
-- /templates
+- /templates/ansible_cache
