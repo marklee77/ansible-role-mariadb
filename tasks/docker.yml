@@ -83,7 +83,8 @@
     command: >
       ansible-playbook 
         -i inventories/local.ini playbooks/online_configuration.yml -e '{ 
-          "mariadb_mysql_root_password" : "{{ mariadb_mysql_root_password }}" }'
+          "mariadb_mysql_root_password" : "{{ mariadb_mysql_root_password }}",
+          "mariadb_docker_host" : "{{ ansible_docker0['ipv4']['address'] }}" }'
     state: present
 
 - name: wait until online configuration is completed

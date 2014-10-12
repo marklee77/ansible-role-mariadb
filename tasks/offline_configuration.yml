@@ -14,4 +14,4 @@
   service:
     name: mysql
     state: restarted
-  when: modify_mysql_cnf|changed and mariadb_docker_host is not defined
+  when: modify_mysql_cnf|changed and mariadb_dockerize_context is not defined

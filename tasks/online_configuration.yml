@@ -30,4 +30,4 @@
     password: "{{ mariadb_mysql_root_password }}" 
     priv: "*.*:ALL,GRANT"
     state: present
-  when: mariadb_docker_host is defined
+  when: mariadb_dockerize_context is defined
