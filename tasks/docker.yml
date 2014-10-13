@@ -32,7 +32,7 @@
 
 - name: ensure mariadb docker image has been built
   docker_image:
-    name: "{{ mariadb_docker_username }}/mariadb"
+    name: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
     path: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
     state: present
 
