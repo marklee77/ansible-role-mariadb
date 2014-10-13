@@ -9,6 +9,25 @@
     - python-mysqldb
     - python-software-properties
 
+- name: ensure supervisor is installed for dockerized deployments
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+    update_cache: yes
+    cache_valid_time: 600
+  with_items:
+    - supervisor
+  when: mariadb_dockerize_context is defined
+
+- name: update supervisor configuration from template for dockerized deployments
+  template:
+    src: etc/supervisor/conf.d/supervisord.conf
+    dest: /etc/supervisor/conf.d/supervisord.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: mariadb_dockerize_context is defined
+
 - name: ensure mariadb repository public key is installed
   command: apt-key adv --recv-key --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
   register: apt_key

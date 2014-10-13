@@ -1,5 +1,8 @@
 ---
 - hosts: all
   sudo: True
+  vars:
+    mariadb_dockerized_deployment: true
+ 
   roles:
     - marklee77.mariadb

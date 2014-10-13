@@ -35,6 +35,11 @@
     name: "{{ mariadb_docker_username }}/mariadb"
     path: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
     state: present
+  register: docker_image_build
+
+- name: display docker image build output
+  debug:
+    msg: "{{ docker_image_build }}"
 
 - name: ensure mariadb data container exists
   docker:

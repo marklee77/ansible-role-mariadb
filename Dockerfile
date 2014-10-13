@@ -13,6 +13,6 @@ RUN ansible-playbook -i inventories/local.ini playbooks/install.yml
 VOLUME [ "/root", "/etc/mysql", "/var/run/mysqld", "/var/lib/mysql", \
          "/var/log" ]
 
-CMD [ "/usr/sbin/mysqld", "--user=mysql" ]
+CMD [ "/usr/bin/supervisord" ]
 
 EXPOSE 3306

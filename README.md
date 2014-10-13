@@ -17,7 +17,9 @@ not (easily) run on travis.
 Role Variables
 --------------
 
-- mariadb_repository_mirror: http://mirrors.coreix.net/mariadb by default.
+Configuration variables are shown below along with default values.
+
+- mariadb_repository_mirror: http://mirrors.coreix.net/mariadb
 - mariadb_version: 10.0
 - mariadb_mysql_root_password: random value
 - mariadb_bind_address: 127.0.0.1
@@ -61,3 +63,5 @@ Todo
 - user .my.cnf configured to connect to mariadb_bind_address:mariadb_port if 
   bound and no socket?
 - automatic rebuild on changes that might affect dockerfile?
+- set root pw for docker host or rely on linking since we have to take that 
+  approach with rabbitmq anyway?
