@@ -63,8 +63,8 @@
 - name: fail on offline configuration failure
   assert:
     that: docker_wait.stdout == "0"
-
   failed_when: docker_wait.stdout != "0"
+
 - name: ensure mariadb service is running
   docker:
     image: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"

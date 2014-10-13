@@ -1,7 +1,4 @@
-AUTHORS
-LICENSE
 Vagrantfile
-*.md
 .dockerignore
 .git
 .gitignore
