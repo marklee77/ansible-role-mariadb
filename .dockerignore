@@ -4,7 +4,6 @@ Vagrantfile
 .git
 .gitignore
 .vagrant
-group_vars
 private
 roles
 templates/ansible_cache
