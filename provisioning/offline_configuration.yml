@@ -1,4 +1,0 @@
-- hosts: all
-  sudo: True
-  tasks:
-    - include: ../tasks/offline_configuration.yml 

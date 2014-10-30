@@ -1,7 +1,7 @@
 ---
 # This file is ONLY for variables that are expected to be static across all 
 # deployments or that may affect the image BUILD. Configuration and runtime 
-# variables should be passed directly.
+# variables should be passed as environment variables at container startup.
 mariadb_dockerize_context: docker
 mariadb_repository_mirror: "{{ mariadb_repository_mirror }}"
 mariadb_version: "{{ mariadb_version }}"

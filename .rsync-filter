@@ -1,12 +1,10 @@
+- .*.swp
 - /Vagrantfile
 - /.dockerignore
 - /.git
 - /.gitignore
 - /.vagrant
-+ /deploy.yml
-- /*.yml
 - /group_vars
-- /playbooks/group_vars
 - /private
 - /roles
 - /templates/ansible_cache

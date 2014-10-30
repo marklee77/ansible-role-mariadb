@@ -5,8 +5,5 @@
 - include: install.yml
   when: not mariadb_dockerized_deployment
 
-- include: offline_configuration.yml
+- include: configure.yml
   when: not mariadb_dockerized_deployment 
-
-- include: online_configuration.yml
-  when: not mariadb_dockerized_deployment
