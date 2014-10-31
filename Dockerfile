@@ -1,4 +1,4 @@
-FROM marklee77/phusion-ansible:latest
+FROM marklee77/baseimage-ansible:latest
 MAINTAINER Mark Stillwell <mark@stillwell.me>
 
 COPY . /var/cache/dockerbuild/mariadb

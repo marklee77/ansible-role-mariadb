@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                           "/var/cache/apt/archives/"
 
   config.vm.provider "docker" do |d|
-    d.image      = "marklee77/baseimage-python"
+    d.image      = "marklee77/baseimage-python-docker"
     d.cmd        = ["/sbin/my_init", "--enable-insecure-key"]
     d.has_ssh    = true
     d.privileged = true
@@ -37,9 +37,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provisioning/deploy.yml"
-  #  ansible.extra_vars = {
-  #    mariadb_dockerized_deployment: true
-  #  }
+    ansible.extra_vars = {
+      mariadb_dockerized_deployment: true
+    }
   end
 
   config.vm.provision "ansible" do |ansible|
