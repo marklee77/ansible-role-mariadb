@@ -51,7 +51,5 @@
     volumes_from: "{{ mariadb_docker_containername }}_data"
     ports: "{{ mariadb_bind_address }}:{{ mariadb_port }}:3306"
     detach: yes
-    env: >
-      mysql_root_password={{ mariadb_mysql_root_password }},
-      docker_host={{ ansible_docker0["ipv4"]["address"] }}
+    env: mysql_root_password={{ mariadb_mysql_root_password }},docker_host={{ ansible_docker0["ipv4"]["address"] }}
     state: running
