@@ -7,6 +7,7 @@
   with_items:
     - "{{ ansible_env.PWD }}/.ansible_cache"
     - "{{ ansible_env.PWD }}/.ansible_cache/dockerbuild"
+  when: mariadb_docker_build_image
 
 - name: synchronize role to remote cache for Dockerfile build
   synchronize:
@@ -15,6 +16,7 @@
     archive: no
     checksum: yes
     recursive: yes
+  when: mariadb_docker_build_image
 
 - name: ensure docker image configuration directory exists
   file:
@@ -23,18 +25,21 @@
     state: directory
   with_items:
     - "{{ ansible_env.PWD }}/.ansible_cache/dockerbuild/mariadb/provisioning/group_vars"
+  when: mariadb_docker_build_image
 
 - name: update configuration used to build docker image from template
   template:
     src: ansible_cache/dockerbuild/mariadb/provisioning/group_vars/all.yml
     owner: "{{ ansible_ssh_user }}"
     dest: "{{ ansible_env.PWD }}/.ansible_cache/dockerbuild/mariadb/provisioning/group_vars/all.yml"
+  when: mariadb_docker_build_image
 
 - name: ensure mariadb docker image has been built
   docker_image:
     name: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
     path: "{{ ansible_env.PWD }}/.ansible_cache/dockerbuild/mariadb"
     state: present
+  when: mariadb_docker_build_image
 
 - name: ensure mariadb data container exists
   docker:
