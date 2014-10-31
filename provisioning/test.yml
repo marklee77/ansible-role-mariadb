@@ -3,15 +3,6 @@
   sudo: True
   tasks:
 
-    - name: ensure apt packages required for testing are installed
-      apt:
-        pkg: "{{ item }}"
-        state: latest
-        update_cache: yes
-        cache_valid_time: 600
-      with_items:
-        - python-mysqldb
- 
     - name: ensure test user account exists
       mysql_user:
         login_host: "{{ mariadb_bind_address }}"

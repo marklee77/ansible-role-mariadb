@@ -55,13 +55,21 @@
     state: running
   register: server_startup
 
-- name: wait for server startup
-  wait_for:
-    delay: 5
-    host: "{{ mariadb_bind_address }}"
-    port: "{{ mariadb_port }}"
-    state: started
-  when: server_startup|changed
+- name: block until the service configuration has been completed
+  mysql_user:
+    login_host: "{{ mariadb_bind_address }}"
+    login_port: "{{ mariadb_port }}"
+    login_user: root
+    login_password: "{{ mariadb_mysql_root_password }}"
+    name: root
+    password: "{{ mariadb_mysql_root_password }}"
+    host: localhost
+    state: present
+  register: server_connect
+  ignore_errors: yes
+  until: server_connect|success
+  retries: 5
+  delay: 1
 
 - name: collect server startup log
   command: docker logs "{{ mariadb_docker_containername }}_server"
