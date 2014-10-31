@@ -3,21 +3,30 @@
 
 require 'fileutils'
 
-def local_cache(basebox_name)
-  cache_dir = Vagrant::Environment.new.home_path.join('cache', 'apt', basebox_name)
-  partial_dir = cache_dir.join('partial')
-  FileUtils.mkpath partial_dir unless partial_dir.exist?
-  cache_dir
-end
+#def local_cache(basebox_name)
+#  cache_dir = Vagrant::Environment.new.home_path.join('cache', 'apt', basebox_name)
+#  partial_dir = cache_dir.join('partial')
+#  FileUtils.mkpath partial_dir unless partial_dir.exist?
+#  cache_dir
+#end
 
 VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "ubuntu/trusty64"
-  config.vm.synced_folder local_cache(config.vm.box), "/var/cache/apt/archives/"
-  config.vm.provider "virtualbox" do |v|
-    v.memory = 1280
+  #config.vm.box = "ubuntu/trusty64"
+  #config.vm.provider "virtualbox" do |v|
+  #  v.memory = 1280
+  #end
+
+  config.vm.provider "docker" do |d|
+    d.image   = "phusion/baseimage"
+    d.cmd     = ["/sbin/my_init", "--enable-insecure-key"]
+    d.has_ssh = true
   end
+  config.ssh.username = "root"
+  config.ssh.private_key_path = "keys/phusion.key"
+
+  #config.vm.synced_folder local_cache(config.vm.box), "/var/cache/apt/archives/"
 
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provisioning/getreqs.yml"
