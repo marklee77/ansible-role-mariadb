@@ -55,16 +55,3 @@ Known Issues
 
 - the dockerized deployment still requires sudo access, even though a member of 
   the docker group should be able to build and deploy containers without sudo.
-
-Todo
-----
-
-- option to map unix socket to local or to *not* map ip address...
-- user .my.cnf configured to connect to mariadb_bind_address:mariadb_port if 
-  bound and no socket?
-- automatic rebuild on changes that might affect dockerfile?
-- set root pw for docker host or rely on linking since we have to take that 
-  approach with rabbitmq anyway?
-- mode to not force building of image if it's available in repository
-- get vagrant docker test environment working...
-- split docker env onto two lines if possible
