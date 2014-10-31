@@ -54,10 +54,11 @@
     env: mysql_root_password={{ mariadb_mysql_root_password }},docker_host={{ ansible_docker0["ipv4"]["address"] }}
     state: running
 
-- name: wait until startup and configuration are completed
-  command: docker wait "{{ mariadb_docker_containername }}_server"
-  register: docker_wait
-  changed_when: false
+- name: wait for server startup
+  wait_for:
+    host: "{{ mariadb_bind_address }}"
+    port: "{{ mariadb_port }}"
+    state: started
 
 - name: collect server startup log
   command: docker logs "{{ mariadb_docker_containername }}_server"
@@ -67,8 +68,4 @@
 - name: display server startup log
   debug:
     msg: "{{ startup_log.stdout_lines }}"
-
-- name: fail on startup failure
-  assert:
-    that: docker_wait.stdout == "0"
 
