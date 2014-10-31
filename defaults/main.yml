@@ -14,6 +14,6 @@ mariadb_port: 3306
 
 # The variables below only apply to dockerized deployment
 mariadb_dockerized_deployment: false
-mariadb_docker_username: default
+mariadb_docker_username: marklee77
 mariadb_docker_imagename: mariadb
 mariadb_docker_containername: mariadb
