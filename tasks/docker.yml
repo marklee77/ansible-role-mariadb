@@ -6,12 +6,12 @@
     state: directory
   with_items:
     - "{{ ansible_env.PWD }}/.ansible_cache"
-    - "{{ ansible_env.PWD }}/.ansible_cache/docker"
+    - "{{ ansible_env.PWD }}/.ansible_cache/dockerbuild"
 
 - name: synchronize role to remote cache for Dockerfile build
   synchronize:
     src: ../
-    dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
+    dest: "{{ ansible_env.PWD }}/.ansible_cache/dockerbuild/mariadb"
     archive: no
     checksum: yes
     recursive: yes
@@ -22,18 +22,18 @@
     owner: "{{ ansible_ssh_user }}"
     state: directory
   with_items:
-    - "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb/provisioning/group_vars"
+    - "{{ ansible_env.PWD }}/.ansible_cache/dockerbuild/mariadb/provisioning/group_vars"
 
 - name: update configuration used to build docker image from template
   template:
     src: ansible_cache/dockerbuild/mariadb/provisioning/group_vars/all.yml
     owner: "{{ ansible_ssh_user }}"
-    dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb/provisioning/group_vars/all.yml"
+    dest: "{{ ansible_env.PWD }}/.ansible_cache/dockerbuild/mariadb/provisioning/group_vars/all.yml"
 
 - name: ensure mariadb docker image has been built
   docker_image:
     name: "{{ mariadb_docker_username }}/{{ mariadb_docker_imagename }}"
-    path: "{{ ansible_env.PWD }}/.ansible_cache/docker/mariadb"
+    path: "{{ ansible_env.PWD }}/.ansible_cache/dockerbuild/mariadb"
     state: present
 
 - name: ensure mariadb data container exists
