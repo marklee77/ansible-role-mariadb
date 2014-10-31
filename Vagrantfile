@@ -28,14 +28,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.private_key_path = "keys/phusion.key"
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/getreqs.yml"
-  end
-
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/prep.yml"
-  end
-
-  config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provisioning/deploy.yml"
     ansible.extra_vars = {
       mariadb_dockerized_deployment: true
