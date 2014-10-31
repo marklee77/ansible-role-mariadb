@@ -53,12 +53,15 @@
     detach: yes
     env: mysql_root_password={{ mariadb_mysql_root_password }},docker_host={{ ansible_docker0["ipv4"]["address"] }}
     state: running
+  register: server_startup
 
 - name: wait for server startup
   wait_for:
+    delay: 5
     host: "{{ mariadb_bind_address }}"
     port: "{{ mariadb_port }}"
     state: started
+  when: server_startup|changed
 
 - name: collect server startup log
   command: docker logs "{{ mariadb_docker_containername }}_server"
