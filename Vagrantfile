@@ -5,10 +5,10 @@ require 'fileutils'
 
 #def local_cache(basebox_name)
 #  cache_dir = Vagrant::Environment.new.home_path.join('cache', 'apt', basebox_name)
-#  partial_dir = cache_dir.join('partial')
-#  FileUtils.mkpath partial_dir unless partial_dir.exist?
 #  cache_dir
 #end
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
 
 VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -19,9 +19,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #end
 
   config.vm.provider "docker" do |d|
-    d.image   = "phusion/baseimage"
-    d.cmd     = ["/sbin/my_init", "--enable-insecure-key"]
-    d.has_ssh = true
+    d.image      = "marklee77/phusion-ansible"
+    d.cmd        = ["/sbin/my_init", "--enable-insecure-key"]
+    d.has_ssh    = true
+    d.privileged = true
   end
   config.ssh.username = "root"
   config.ssh.private_key_path = "keys/phusion.key"

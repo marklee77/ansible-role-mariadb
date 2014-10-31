@@ -65,3 +65,6 @@ Todo
 - automatic rebuild on changes that might affect dockerfile?
 - set root pw for docker host or rely on linking since we have to take that 
   approach with rabbitmq anyway?
+- mode to not force building of image if it's available in repository
+- get vagrant docker test environment working...
+- split docker env onto two lines if possible
