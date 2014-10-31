@@ -68,7 +68,7 @@
   register: server_connect
   ignore_errors: yes
   until: server_connect|success
-  retries: 5
+  retries: 30
   delay: 1
 
 - name: collect server startup log
