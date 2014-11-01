@@ -1,4 +1,7 @@
 ---
+- debug:
+    msg: "{{ mariadb_dockerized_deployment }}"
+
 - include: docker.yml
   when: mariadb_dockerized_deployment
 
