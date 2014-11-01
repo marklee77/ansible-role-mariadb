@@ -55,8 +55,3 @@ Known Issues
 
 - the dockerized deployment still requires sudo access, even though a member of 
   the docker group should be able to build and deploy containers without sudo.
-
-Todo
-----
-
-- can totally figure out docker host from inside container...

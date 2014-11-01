@@ -13,8 +13,8 @@ mariadb_bind_address: 127.0.0.1
 mariadb_port: 3306
 
 # The variables below only apply to dockerized deployment
-mariadb_dockerized_deployment: false
+mariadb_dockerized_deployment: "{{ default_dockerized_deployment|default(false) }}"
 mariadb_docker_username: "{{ default_docker_username|default('default') }}"
 mariadb_docker_build_image: "{{ default_docker_build_image|default(true) }}"
 mariadb_docker_imagename: mariadb
-mariadb_docker_containername: mariadb
+mariadb_docker_containername: mysql
