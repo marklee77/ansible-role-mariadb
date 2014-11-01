@@ -1,8 +1,20 @@
 ---
-- name: wait until mariadb service is ready
-  wait_for:
-    path: /var/run/mysqld/mysqld.sock
-    state: present
+- name: ensure mariadb is started and enabled
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: ensure anonymous users are not in the database
+  mysql_user:
+    name: ""
+    host: "{{ item }}"
+    state: absent
+  with_items:
+    - localhost
+    - 127.0.0.1
+    - ::1
+    - "%"
 
 - name: update mariadb root password for local root account
   mysql_user: 
@@ -30,3 +42,22 @@
     priv: "*.*:ALL,GRANT"
     state: present
   when: mariadb_dockerize_context is defined
+
+- name: ensure mariadb is configured to bind to the specified address and port
+  ini_file:
+    dest: /etc/mysql/my.cnf
+    section: mysqld
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { option: bind-address, value: "{{ mariadb_bind_address }}" }
+    - { option: port, value: "{{ mariadb_port }}" }
+  register: modify_mysql_cnf
+
+# FIXME: could actually use a handler here...
+- name: restart mariadb when necessary
+  service:
+    name: mysql
+    state: restarted
+  when: modify_mysql_cnf|changed
+
