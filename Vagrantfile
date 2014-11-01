@@ -35,6 +35,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.playbook = "provisioning/deploy.yml"
     ansible.extra_vars = {
       mariadb_dockerized_deployment: true,
+      mariadb_docker_username: "marklee77",
+      mariadb_docker_build_image: false
     }
   end
 
