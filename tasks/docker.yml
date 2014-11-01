@@ -58,9 +58,10 @@
     detach: yes
     env: 
       - mysql_root_password={{ mariadb_mysql_root_password }}
-      - docker_host={{ ansible_docker0["ipv4"]["address"] }}
     state: running
   register: server_startup
+
+#     - docker_host={{ ansible_docker0["ipv4"]["address"] }}
 
 - name: block until the service configuration has been completed
   mysql_user:
@@ -76,14 +77,3 @@
   until: server_connect|success
   retries: 30
   delay: 1
-
-
-- name: collect server startup log
-  command: docker logs "{{ mariadb_docker_containername }}_server"
-  register: startup_log
-  changed_when: false
-
-- name: display server startup log
-  debug:
-    msg: "{{ startup_log.stdout_lines }}"
-
