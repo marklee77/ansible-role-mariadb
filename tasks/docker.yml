@@ -61,8 +61,6 @@
     state: running
   register: server_startup
 
-#     - docker_host={{ ansible_docker0["ipv4"]["address"] }}
-
 - name: block until the service configuration has been completed
   mysql_user:
     login_host: "{{ mariadb_bind_address }}"
