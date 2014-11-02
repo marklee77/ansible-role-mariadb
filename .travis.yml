@@ -25,12 +25,6 @@ install:
 script:
 
     # Check the role/playbook's syntax.
-    - ansible-playbook -i inventories/local.ini provisioning/prep.yml --syntax-check
-
-    # Run the role/playbook with ansible-playbook.
-    - ansible-playbook -i inventories/local.ini provisioning/prep.yml
-
-    # Check the role/playbook's syntax.
     - ansible-playbook -i inventories/local.ini provisioning/deploy.yml --syntax-check
 
     # Run the role/playbook with ansible-playbook.
