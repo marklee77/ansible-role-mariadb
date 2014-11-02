@@ -29,9 +29,3 @@
   with_items:
     - mariadb-server
     - mariadb-client
-
-- name: ensure mariadb is properly shut down for docker
-  service: 
-    name: mysql
-    state: stopped
-  when: mariadb_dockerize_context is defined
