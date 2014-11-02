@@ -1,4 +1,6 @@
 ---
+- include: prep.yml
+
 - include: docker.yml
   when: mariadb_dockerized_deployment
 
