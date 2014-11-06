@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     machine.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/deploy.yml"
     end
-    config.vm.provision "ansible" do |ansible|
+    machine.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/test.yml"
     end
   end
@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       }
       ansible.playbook = "provisioning/deploy.yml"
     end
-    config.vm.provision "ansible" do |ansible|
+    machine.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/test.yml"
     end
   end
@@ -38,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       }
       ansible.playbook = "provisioning/deploy.yml"
     end
-    config.vm.provision "ansible" do |ansible|
+    machine.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/test.yml"
     end
   end
