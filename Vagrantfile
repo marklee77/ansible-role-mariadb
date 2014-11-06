@@ -6,7 +6,7 @@ ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
 VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "docker" do |d|
-    d.image      = "marklee77/ubuntu-trusty-vagrantbox-docker"
+    d.image      = "marklee77/vagrantbox-docker"
     d.has_ssh    = true
     d.privileged = true
   end
