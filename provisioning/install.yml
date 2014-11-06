@@ -2,3 +2,5 @@
   sudo: True
   tasks:
     - include: ../tasks/install.yml 
+  handlers:
+    - include: ../handlers/main.yml

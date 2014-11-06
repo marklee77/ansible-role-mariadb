@@ -52,11 +52,5 @@
   with_items:
     - { option: bind-address, value: "{{ mariadb_bind_address }}" }
     - { option: port, value: "{{ mariadb_port }}" }
-  register: modify_mysql_cnf
-
-- name: restart mariadb when necessary
-  service:
-    name: mysql
-    state: restarted
-  when: modify_mysql_cnf|changed
-
+  notify:
+    - restart mariadb
