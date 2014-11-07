@@ -49,8 +49,13 @@
     section: mysqld
     option: "{{ item.option }}"
     value: "{{ item.value }}"
+  register: my_cnf
   with_items:
     - { option: bind-address, value: "{{ mariadb_bind_address }}" }
     - { option: port, value: "{{ mariadb_port }}" }
-  notify:
-    - restart mariadb
+
+- name: restart mariadb if necessary
+  service:
+    name: mysql
+    state: restarted
+  when: my_cnf|changed
