@@ -50,8 +50,3 @@ Author Information
 
 http://stillwell.me
 
-Known Issues
-------------
-
-- the dockerized deployment still requires sudo access, even though a member of 
-  the docker group should be able to build and deploy containers without sudo.
