@@ -2,4 +2,4 @@
 .vagrant
 private
 roles/*
-!roles/marklee77.mariadb
+!roles/mariadb
