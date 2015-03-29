@@ -4,12 +4,12 @@ MAINTAINER Mark Stillwell <mark@stillwell.me>
 COPY . /var/cache/dockerbuild/mariadb
 WORKDIR /var/cache/dockerbuild/mariadb
 
-RUN ansible-playbook -i inventories/local.ini provisioning/install.yml -e '{ \
+RUN ansible-playbook -i inventories/local.ini site.yml --tags configure -e '{ \
       "mariadb_dockerize_context" : "docker" }' && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN mkdir -p /etc/my_init.d && \
-    cp scripts/startmariadb.sh /etc/my_init.d/10-mariadb && \
+    cp docker/startmariadb.sh /etc/my_init.d/10-mariadb && \
     chmod 0755 /etc/my_init.d/10-mariadb
 
 VOLUME [ "/root", "/etc/mysql", \

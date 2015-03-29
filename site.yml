@@ -2,7 +2,7 @@
 - hosts: default
   sudo: True
   roles:
-    - marklee77.mariadb
+    - mariadb
 
 - hosts: default
   sudo: True
