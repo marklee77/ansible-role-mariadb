@@ -5,5 +5,4 @@ Vagrantfile
 .gitignore
 .vagrant
 private
-roles
 templates/ansible_cache

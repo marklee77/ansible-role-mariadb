@@ -1,10 +1,10 @@
 ---
-- hosts: default
+- hosts: all
   sudo: True
   roles:
     - mariadb
 
-- hosts: default
+- hosts: all
   sudo: True
   tags:
     - test
