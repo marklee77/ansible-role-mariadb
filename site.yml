@@ -1,6 +1,13 @@
 ---
-- hosts: all
+- hosts: default
   sudo: True
+  roles:
+    - marklee77.mariadb
+
+- hosts: default
+  sudo: True
+  tags:
+    - test
   tasks:
 
     - name: ensure test user account exists
