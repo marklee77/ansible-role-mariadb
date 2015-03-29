@@ -4,7 +4,7 @@ MAINTAINER Mark Stillwell <mark@stillwell.me>
 COPY . /var/cache/dockerbuild/mariadb
 WORKDIR /var/cache/dockerbuild/mariadb
 
-RUN ansible-playbook -i inventories/local.ini site.yml --tags configure -e '{ \
+RUN ansible-playbook -i inventories/local.ini site.yml --tags install -e '{ \
       "mariadb_dockerize_context" : "docker" }' && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
